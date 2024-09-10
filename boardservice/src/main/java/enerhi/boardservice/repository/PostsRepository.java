@@ -1,4 +1,4 @@
-package enerhi.boardservice.Repository;
+package enerhi.boardservice.repository;
 
 import enerhi.boardservice.domain.Posts;
 import jakarta.persistence.EntityManager;
@@ -18,6 +18,6 @@ public class PostsRepository {
         return em.find(Posts.class, id);
     }
 
-    
+
 
 }
