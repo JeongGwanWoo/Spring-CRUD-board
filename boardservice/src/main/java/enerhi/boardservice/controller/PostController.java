@@ -22,7 +22,7 @@ public class PostController {
     @GetMapping("/board/write")
     public String postWrite(Model model) {
         model.addAttribute("form", new PostForm());
-        return "redirection:/";
+        return "board/write";
     }
 
     //글 목록 조회
@@ -30,6 +30,6 @@ public class PostController {
     public String postList(Model model) {
         List<Posts> posts = postsService.findPosts();
         model.addAttribute("posts", posts);
-        return "board/postList";
+        return "board/list";
     }
 }
