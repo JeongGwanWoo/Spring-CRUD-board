@@ -1,9 +1,6 @@
 package enerhi.boardservice.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,5 +22,7 @@ public class Posts {
     private LocalDateTime postEditDate; //수정 되었을 때
     private LocalDateTime postDeleteDate; //삭제 되었을 때
     private int views; //조회수
+
+    @Enumerated(EnumType.STRING)
     private PostStatus status; // [INCLUDE, DELETE]
 }

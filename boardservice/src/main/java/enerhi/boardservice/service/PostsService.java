@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class PostsService {
 
     @Autowired
@@ -20,7 +20,6 @@ public class PostsService {
     /**
      * 글 쓰기
      */
-    @Transactional
     public Long save(Posts post) {
         postsRepository.save(post);
         return post.getId();
@@ -33,14 +32,13 @@ public class PostsService {
         return postsRepository.findOne(postId);
     }
 
-    public List<Posts> postsList() {
+    public List<Posts> findPosts() {
         return postsRepository.findAll();
     }
 
     /**
      * 글 수정
      */
-    @Transactional
     public void postUpdate(Long postId, String name, String title, String content) {
         Posts findPost = postsRepository.findOne(postId);
         findPost.setName(name);
@@ -51,7 +49,6 @@ public class PostsService {
     /**
      * 글 삭제
      */
-    @Transactional
     public void postDelete(Long postId) {
         Posts findPost = postsRepository.findOne(postId);
         findPost.setStatus(PostStatus.DELETE);
