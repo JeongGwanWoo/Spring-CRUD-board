@@ -20,7 +20,9 @@ public class Posts {
     private String name;
     private String title;
     private String content;
-    private LocalDateTime postdate;
+
+    private LocalDateTime postDate;
+    private LocalDateTime postEditDate;
     private int views;
     private PostStatus status; // [INCLUDE, DELETE]
 }

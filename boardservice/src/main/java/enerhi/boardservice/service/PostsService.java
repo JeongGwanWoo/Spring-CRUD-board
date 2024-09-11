@@ -1,5 +1,6 @@
 package enerhi.boardservice.service;
 
+import enerhi.boardservice.domain.PostStatus;
 import enerhi.boardservice.domain.Posts;
 import enerhi.boardservice.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,25 @@ public class PostsService {
 
     public List<Posts> postsList() {
         return postsRepository.findAll();
+    }
+
+    /**
+     * 글 수정
+     */
+    @Transactional
+    public void postUpdate(Long postId, String name, String title, String content) {
+        Posts findPost = postsRepository.findOne(postId);
+        findPost.setName(name);
+        findPost.setTitle(title);
+        findPost.setContent(content);
+    }
+
+    /**
+     * 글 삭제
+     */
+    @Transactional
+    public void postDelete(Long postId) {
+        Posts findPost = postsRepository.findOne(postId);
+        findPost.setStatus(PostStatus.DELETE);
     }
 }
