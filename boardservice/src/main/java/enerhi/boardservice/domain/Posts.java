@@ -17,12 +17,13 @@ public class Posts {
     @Column(name = "post_id")
     private Long id;
 
-    private String name;
-    private String title;
-    private String content;
+    private String name; //글 작성자 이름
+    private String title; //글 제목
+    private String content; //글 내용
 
-    private LocalDateTime postDate;
-    private LocalDateTime postEditDate;
-    private int views;
+    private LocalDateTime postDate; //생성 되었을 때
+    private LocalDateTime postEditDate; //수정 되었을 때
+    private LocalDateTime postDeleteDate; //삭제 되었을 때
+    private int views; //조회수
     private PostStatus status; // [INCLUDE, DELETE]
 }
