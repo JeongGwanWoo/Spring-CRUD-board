@@ -20,8 +20,9 @@ public class PostsService {
      * 글 쓰기
      */
     @Transactional
-    public void save(Posts post) {
+    public Long save(Posts post) {
         postsRepository.save(post);
+        return post.getId();
     }
 
     /**
