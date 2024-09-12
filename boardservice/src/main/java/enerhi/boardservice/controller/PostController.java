@@ -60,6 +60,7 @@ public class PostController {
         Posts post = postsService.findOne(postId);
 
         PostForm postForm = new PostForm();
+        postForm.setId(post.getId());
         postForm.setName(post.getName());
         postForm.setTitle(post.getTitle());
         postForm.setContent(post.getContent());
@@ -72,6 +73,15 @@ public class PostController {
     public String postUpdate(@PathVariable("postId") Long postId, @ModelAttribute("form") PostForm postForm) {
         log.info("postUpdate 실행은 됐음!");
         postsService.postUpdate(postId, postForm.getName(), postForm.getTitle(), postForm.getContent());
+
+        return "redirect:/board/list";
+    }
+
+    //글 삭제
+    @PostMapping("/board/{postId}/delete")
+    public String postDelete(@PathVariable("postId") Long postId) {
+        log.info("삭제 함수 호출됨");
+        postsService.postDelete(postId);
 
         return "redirect:/board/list";
     }

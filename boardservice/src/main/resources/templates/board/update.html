@@ -53,8 +53,13 @@
                 <textarea class="createContent" th:field="*{content}" rows="5" placeholder="내용을 입력하세요"></textarea>
             </div>
         </div>
-            <button type="submit">수정</button>
+        <button type="submit">수정</button>
+<!--        <button th:onclick="|href='@{/board/{id}/delete (id=${form.id})}'|" type="button">삭제</button>-->
     </form>
+    <form th:action="@{/board/{id}/delete (id=${form.id})}" th:object="${form}" method="post">
+        <button>삭제</button>
+    </form>
+
 </div>
 </body>
 </html>
