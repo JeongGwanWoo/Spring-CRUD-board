@@ -45,6 +45,7 @@ public class PostsService {
         findPost.setName(name);
         findPost.setTitle(title);
         findPost.setContent(content);
+        findPost.setPostEditDate(LocalDateTime.now());
     }
 
     /**
