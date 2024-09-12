@@ -69,7 +69,8 @@ public class PostController {
     }
 
     @PostMapping("/board/{postId}/edit")
-    public String postUpdate(@PathVariable("pathId") Long postId, @ModelAttribute("form") PostForm postForm) {
+    public String postUpdate(@PathVariable("postId") Long postId, @ModelAttribute("form") PostForm postForm) {
+        log.info("postUpdate 실행은 됐음!");
         postsService.postUpdate(postId, postForm.getName(), postForm.getTitle(), postForm.getContent());
 
         return "redirect:/board/list";
