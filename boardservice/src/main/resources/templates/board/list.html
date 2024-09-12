@@ -38,10 +38,10 @@
                     <td style="text-align: center;" th:text="${post.id}">1</td>
                     <td th:text="${post.title}">제목입니다.</td>
                     <td style="text-align: center;" th:text="${post.name}">정관우</td>
-                    <td style="text-align: center;" th:text="${post.date}">0년0월0일</td>
+                    <td style="text-align: center;" th:text="${post.postDate}">0년0월0일</td>
                     <td style="text-align: center;" th:text="${post.views}">0</td>
                     <td>
-                        <a href="/board/update">수정</a>
+                        <a href="#" th:href="@{/board/{id}/edit (id=${post.id})}">수정</a>
                     </td>
                 </tr>
             </tbody>
