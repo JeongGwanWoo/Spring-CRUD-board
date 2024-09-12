@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
@@ -50,5 +52,26 @@ public class PostController {
         List<Posts> posts = postsService.findPosts();
         model.addAttribute("posts", posts);
         return "board/list";
+    }
+
+    //글 수정
+    @GetMapping("/board/{postId}/edit")
+    public String postUpdateForm(@PathVariable("postId") Long postId, Model model) {
+        Posts post = postsService.findOne(postId);
+
+        PostForm postForm = new PostForm();
+        postForm.setName(post.getName());
+        postForm.setTitle(post.getTitle());
+        postForm.setContent(post.getContent());
+
+        model.addAttribute("form", postForm);
+        return "board/update";
+    }
+
+    @PostMapping("/board/{postId}/edit")
+    public String postUpdate(@PathVariable("pathId") Long postId, @ModelAttribute("form") PostForm postForm) {
+        postsService.postUpdate(postId, postForm.getName(), postForm.getTitle(), postForm.getContent());
+
+        return "redirect:/board/list";
     }
 }
