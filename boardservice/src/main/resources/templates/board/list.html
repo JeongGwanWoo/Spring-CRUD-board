@@ -12,7 +12,10 @@
         margin-top: 100px;
     }
     .title {
-        width: 300px;
+        width: 500px;
+    }
+    .name {
+        width: 100px;
     }
 </style>
 <body>
@@ -25,18 +28,21 @@
                 <tr>
                     <th>글번호</th>
                     <th class="title">제목</th>
-                    <th>작성자</th>
-                    <th>날짜</th>
+                    <th class="name">작성자</th>
+                    <th class="date">날짜</th>
                     <th>조회수</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each = "post:${posts}">
-                    <td th:text="${post.id}">1</td>
+                    <td style="text-align: center;" th:text="${post.id}">1</td>
                     <td th:text="${post.title}">제목입니다.</td>
-                    <td th:text="${post.name}">정관우</td>
-                    <td th:text="${post.date}">0년0월0일</td>
-                    <td th:text="${post.views}">0</td>
+                    <td style="text-align: center;" th:text="${post.name}">정관우</td>
+                    <td style="text-align: center;" th:text="${post.date}">0년0월0일</td>
+                    <td style="text-align: center;" th:text="${post.views}">0</td>
+                    <td>
+                        <a href="/board/update">수정</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
