@@ -51,6 +51,9 @@ public class PostController {
     public String postList(Model model) {
         List<Posts> posts = postsService.findPosts();
         model.addAttribute("posts", posts);
+        for (Posts post : posts) {
+            log.info(post.getId() + " " +post.getStatus());
+        }
         return "board/list";
     }
 
