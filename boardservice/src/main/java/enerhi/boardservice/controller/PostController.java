@@ -88,4 +88,19 @@ public class PostController {
 
         return "redirect:/board/list";
     }
+
+    //글 내용 조회
+    @GetMapping("/board/{postId}/post")
+    public String postShow(@PathVariable("postId") Long postId, Model model) {
+        Posts post = postsService.findOne(postId);
+
+        PostForm postForm = new PostForm();
+        postForm.setId(post.getId());
+        postForm.setName(post.getName());
+        postForm.setTitle(post.getTitle());
+        postForm.setContent(post.getContent());
+
+        model.addAttribute("form", postForm);
+        return "/board/show";
+    }
 }

@@ -37,7 +37,11 @@
                 <!--목록에서 INCLUDE 상태인 게시글만 표시하는 if문 추가(삭제부분)-->
                 <tr th:each = "post:${posts}" th:if="${post.status.name() == 'INCLUDE'}">
                     <td style="text-align: center;" th:text="${post.id}">1</td>
-                    <td th:text="${post.title}">제목입니다.</td>
+                    <td>
+                        <a th:href="@{/board/{id}/post (id=${post.id})}">
+                            <p th:text="${post.title}">제목입니다.</p>
+                        </a>
+                    </td>
                     <td style="text-align: center;" th:text="${post.name}">정관우</td>
                     <td style="text-align: center;" th:text="${post.postDate}">0년0월0일</td>
                     <td style="text-align: center;" th:text="${post.views}">0</td>
