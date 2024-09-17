@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 페이지</title>
+    <title>게시글 상세 페이지</title>
 </head>
 
 <style>
@@ -21,17 +21,13 @@
 </style>
 <body>
 <div class="layout">
-<!--    <div th:object="${form}">-->
-<!--        <div class="createTitle" th:field="*{title}">제목입니다.</div>-->
-<!--        <div class="createName" th:field="*{name}">이름입니다.</div>-->
-<!--        <div class="createContent" th:field="*{content}">내용입니다.</div>-->
-<!--    </div>-->
     <div>
         <p th:text="${form.title}">제목</p>
     </div>
     <div>
         <span class="name" th:text="${form.name}">이름</span>
         <span th:text="${form.postDate}">2024.09.17 00:00:00</span>
+        <!--조회 수 수정 예정-->
         <span th:text="|조회 ${form.views}|">99</span>
     </div>
     <div>
