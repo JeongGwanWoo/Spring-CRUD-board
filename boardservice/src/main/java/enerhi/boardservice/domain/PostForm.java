@@ -11,4 +11,6 @@ public class PostForm {
     private String name;
     private String title;
     private String content;
+    private String postDate;
+    private int views;
 }

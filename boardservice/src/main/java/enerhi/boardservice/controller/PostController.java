@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -22,6 +23,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostsService postsService;
+
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter dtFmt = DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm:ss");
+    String ldtStr = now.format(dtFmt);
 
     //글 작성
     @GetMapping("/board/write")
@@ -37,7 +42,8 @@ public class PostController {
         post.setName(postForm.getName());
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
-        post.setPostDate(LocalDateTime.now());
+//        post.setPostDate(LocalDateTime.now());
+        post.setPostDate(ldtStr);
         post.setViews(0);
         post.setStatus(PostStatus.INCLUDE);
 
@@ -99,6 +105,8 @@ public class PostController {
         postForm.setName(post.getName());
         postForm.setTitle(post.getTitle());
         postForm.setContent(post.getContent());
+        postForm.setPostDate(post.getPostDate());
+        postForm.setViews(post.getViews() + 1);
 
         model.addAttribute("form", postForm);
         return "/board/show";

@@ -3,12 +3,12 @@ package enerhi.boardservice.service;
 import enerhi.boardservice.domain.PostStatus;
 import enerhi.boardservice.domain.Posts;
 import enerhi.boardservice.repository.PostsRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -17,6 +17,10 @@ public class PostsService {
 
     @Autowired
     PostsRepository postsRepository;
+
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter dtFmt = DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm:ss");
+    String ldtStr = now.format(dtFmt);
 
     /**
      * 글 쓰기
@@ -45,7 +49,7 @@ public class PostsService {
         findPost.setName(name);
         findPost.setTitle(title);
         findPost.setContent(content);
-        findPost.setPostEditDate(LocalDateTime.now());
+        findPost.setPostEditDate(ldtStr);
     }
 
     /**
@@ -53,7 +57,7 @@ public class PostsService {
      */
     public void postDelete(Long postId) {
         Posts findPost = postsRepository.findOne(postId);
-        findPost.setPostDeleteDate(LocalDateTime.now());
+        findPost.setPostDeleteDate(ldtStr);
         findPost.setStatus(PostStatus.DELETE);
     }
 }
