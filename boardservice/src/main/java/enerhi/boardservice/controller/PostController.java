@@ -5,6 +5,8 @@ import enerhi.boardservice.domain.PostStatus;
 import enerhi.boardservice.domain.Posts;
 import enerhi.boardservice.repository.PostsRepository;
 import enerhi.boardservice.service.PostsService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -97,9 +99,9 @@ public class PostController {
 
     //글 내용 조회
     @GetMapping("/board/{postId}/post")
-    public String postShow(@PathVariable("postId") Long postId, Model model) {
+    public String postShow(@PathVariable("postId") Long postId, Model model, HttpServletRequest request, HttpServletResponse response) {
         Posts post = postsService.findOne(postId);
-        post.setViews(post.getViews()+1);
+        postsService.postRead(postId, request, response);
 
         PostForm postForm = new PostForm();
         postForm.setId(post.getId());
