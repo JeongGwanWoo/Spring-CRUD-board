@@ -99,6 +99,7 @@ public class PostController {
     @GetMapping("/board/{postId}/post")
     public String postShow(@PathVariable("postId") Long postId, Model model) {
         Posts post = postsService.findOne(postId);
+        post.setViews(post.getViews()+1);
 
         PostForm postForm = new PostForm();
         postForm.setId(post.getId());
@@ -106,7 +107,7 @@ public class PostController {
         postForm.setTitle(post.getTitle());
         postForm.setContent(post.getContent());
         postForm.setPostDate(post.getPostDate());
-        postForm.setViews(post.getViews() + 1);
+        postForm.setViews(post.getViews());
 
         model.addAttribute("form", postForm);
         return "/board/show";
