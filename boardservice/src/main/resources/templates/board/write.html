@@ -43,22 +43,13 @@
             <label th:for="name">이름</label>
             <label class="Title" th:for="title">제목</label>
             <div>
-<!--                <input type="text" th:field="*{name}" class="createName" rows="1" placeholder="이름을 입력하세요">-->
                 <textarea class="createName" th:field="*{name}" rows="1" placeholder="이름을 입력하세요"></textarea>
                 <textarea class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>
             </div>
         </div>
-<!--        <div class="form-group">-->
-<!--            <label th:for="title">제목</label>-->
-<!--            <div>-->
-<!--&lt;!&ndash;                <input type="text" th:field="*{title}" class="createTitle" placeholder="제목을 입력하세요">&ndash;&gt;-->
-<!--                <textarea class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="form-group">
             <label th:for="content">내용</label>
             <div>
-<!--                <input type="text" th:field="*{content}" class="form-control" placeholder="내용을 입력하세요">-->
                 <textarea class="createContent" th:field="*{content}" rows="5" placeholder="내용을 입력하세요"></textarea>
             </div>
         </div>

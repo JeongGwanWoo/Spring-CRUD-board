@@ -54,7 +54,6 @@
             </div>
         </div>
         <button type="submit">수정</button>
-<!--        <button th:onclick="|href='@{/board/{id}/delete (id=${form.id})}'|" type="button">삭제</button>-->
     </form>
     <form th:action="@{/board/{id}/delete (id=${form.id})}" th:object="${form}" method="post">
         <button>삭제</button>
