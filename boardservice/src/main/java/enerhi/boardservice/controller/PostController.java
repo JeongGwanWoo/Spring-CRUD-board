@@ -3,7 +3,7 @@ package enerhi.boardservice.controller;
 import enerhi.boardservice.domain.PostForm;
 import enerhi.boardservice.domain.PostStatus;
 import enerhi.boardservice.domain.Posts;
-import enerhi.boardservice.repository.PostsRepository;
+import enerhi.boardservice.domain.Search;
 import enerhi.boardservice.service.PostsService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -56,14 +53,15 @@ public class PostController {
 
     //글 목록 조회
     @GetMapping("/board/list")
-    public String postList(Model model) {
+    public String postList(Model model, @RequestParam(value = "keyward", required = false) String keyward) {
         List<Posts> posts = postsService.findPosts();
         model.addAttribute("posts", posts);
-        for (Posts post : posts) {
-            log.info(post.getId() + " " +post.getStatus());
-        }
+
+        log.info("검색 키워드 : ",keyward);
+
         return "board/list";
     }
+
 
     //글 수정
     @GetMapping("/board/{postId}/edit")

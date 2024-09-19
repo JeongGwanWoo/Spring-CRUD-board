@@ -17,6 +17,11 @@
     .name {
         width: 100px;
     }
+    .search {
+        resize: none;
+        width: 300px;
+        length: 20px;
+    }
 </style>
 <body>
     <div class="layout">
@@ -51,6 +56,12 @@
                 </tr>
             </tbody>
         </table>
+        <div>
+            <form th:href="@{/board/list&s_type}"  method="get" id="searchForm">
+                <input class="search" type="text" id="keyward" name="keyward" th:value="${keyward}" placeholder="검색어 입력">
+                <button type="submit">검색</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>
