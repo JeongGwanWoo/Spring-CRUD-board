@@ -69,7 +69,6 @@ public class PostsService {
     /**
      * 조회수 증가
      */
-    @Transactional
     public void postRead(Long postId, HttpServletRequest request, HttpServletResponse response) {
         // 쿠키 체크
         Cookie[] cookies = request.getCookies();
