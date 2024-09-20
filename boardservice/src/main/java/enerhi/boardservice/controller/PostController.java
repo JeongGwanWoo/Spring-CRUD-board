@@ -57,12 +57,27 @@ public class PostController {
         log.info("검색 유형 : " + type);
         log.info("검색 키워드 : " + keyward);
 
+        SearchStatus searchStatus = SearchStatus.TITLE;
+
         if (keyward != null) {
-            List<Posts> posts = postsService.postSearch(type, keyward);
-            model.addAttribute("posts", posts);
+            if (type.equals("title")) {
+                searchStatus = SearchStatus.TITLE;
+                List<Posts> posts = postsService.postSearch(type, keyward);
+                model.addAttribute("posts", posts);
+                model.addAttribute("keyward", keyward);
+                model.addAttribute("searchStatus", searchStatus);
+            } else {
+                searchStatus = SearchStatus.NAME;
+                List<Posts> posts = postsService.postSearch(type, keyward);
+                model.addAttribute("posts", posts);
+                model.addAttribute("keyward", keyward);
+                model.addAttribute("searchStatus", searchStatus);
+            }
         } else {
             List<Posts> posts = postsService.findPosts();
             model.addAttribute("posts", posts);
+            model.addAttribute("keyward", null);
+            model.addAttribute("searchStatus", searchStatus);
         }
 
         return "board/list";
