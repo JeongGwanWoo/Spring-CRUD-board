@@ -1,9 +1,6 @@
 package enerhi.boardservice.controller;
 
-import enerhi.boardservice.domain.PostForm;
-import enerhi.boardservice.domain.PostStatus;
-import enerhi.boardservice.domain.Posts;
-import enerhi.boardservice.domain.Search;
+import enerhi.boardservice.domain.*;
 import enerhi.boardservice.service.PostsService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,11 +50,20 @@ public class PostController {
 
     //글 목록 조회
     @GetMapping("/board/list")
-    public String postList(Model model, @RequestParam(value = "keyward", required = false) String keyward) {
-        List<Posts> posts = postsService.findPosts();
-        model.addAttribute("posts", posts);
+    public String postList(Model model,
+                           @RequestParam(value = "type", required = false, defaultValue = "title") String type,
+                           @RequestParam(value = "keyward", required = false) String keyward) {
 
-        log.info("검색 키워드 : ",keyward);
+        log.info("검색 유형 : " + type);
+        log.info("검색 키워드 : " + keyward);
+
+        if (keyward != null) {
+            List<Posts> posts = postsService.postSearch(type, keyward);
+            model.addAttribute("posts", posts);
+        } else {
+            List<Posts> posts = postsService.findPosts();
+            model.addAttribute("posts", posts);
+        }
 
         return "board/list";
     }

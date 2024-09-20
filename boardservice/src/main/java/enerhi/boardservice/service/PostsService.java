@@ -100,4 +100,15 @@ public class PostsService {
         Posts findPost = postsRepository.findOne(postId);
         findPost.setViews(findPost.getViews()+1);
     }
+
+    /**
+     * 글 검색
+     */
+    public List<Posts> postSearch(String type, String keyward) {
+        if (type.equals("name")) {
+            return postsRepository.findName(keyward);
+        } else {
+            return postsRepository.findTitle(keyward);
+        }
+    }
 }

@@ -25,4 +25,12 @@ public class PostsRepository {
     public List<Posts> findAll() {
         return em.createQuery("select p from Posts as p", Posts.class).getResultList();
     }
+
+    public List<Posts> findName(String keyward) {
+        return em.createQuery("select p from Posts as p where name like '%" + keyward + "%'", Posts.class).getResultList();
+    }
+
+    public List<Posts> findTitle(String keyward) {
+        return em.createQuery("select p from Posts as p where title like '%" + keyward + "%'", Posts.class).getResultList();
+    }
 }
