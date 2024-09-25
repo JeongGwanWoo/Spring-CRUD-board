@@ -20,10 +20,6 @@ import java.util.List;
 public class PostController {
     private final PostsService postsService;
 
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter dtFmt = DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm:ss");
-    String ldtStr = now.format(dtFmt);
-
     //글 작성
     @GetMapping("/board/write")
     public String postWriteForm(Model model) {
@@ -38,14 +34,19 @@ public class PostController {
         post.setName(postForm.getName());
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
-//        post.setPostDate(LocalDateTime.now());
-        post.setPostDate(ldtStr);
+        post.setPostDate(dateTime());
         post.setViews(0);
         post.setStatus(PostStatus.INCLUDE);
 
         postsService.save(post);
 
         return "redirect:/board/list";
+    }
+
+    public String dateTime() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String parsedLocalDateTimeNow = localDateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+        return parsedLocalDateTimeNow;
     }
 
     SearchStatus searchStatus = SearchStatus.TITLE;

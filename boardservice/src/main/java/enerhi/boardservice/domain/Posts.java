@@ -20,6 +20,7 @@ public class Posts {
     private String content; //글 내용
 
     private String postDate; //생성 되었을 때
+    private LocalDateTime postDate2; //생성 되었을 때
     private String postEditDate; //수정 되었을 때
     private String postDeleteDate; //삭제 되었을 때
     private int views; //조회수
