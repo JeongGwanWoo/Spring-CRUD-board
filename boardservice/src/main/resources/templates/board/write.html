@@ -7,6 +7,12 @@
 </head>
 
 <style>
+    a {
+        text-decoration-line: none;
+    }
+    body {
+        font-family: 'S-CoreDream-3Light', serif;
+    }
     .layout {
         width: 1000px;
         margin: 0 auto;
@@ -38,11 +44,17 @@
         border-bottom:2px solid black;
         margin-top: 20px;
     }
+    @font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+    }
 </style>
 <body>
-<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+<nav class="navbar" style="background-color: #FADAD8;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/board/list">게시판</a>
+        <a href="/board/list" style="color: #534847; font-weight: bold; font-size: 30px; margin-left: 10px;">게 시 판</a>
     </div>
 </nav>
 <div class="layout">
