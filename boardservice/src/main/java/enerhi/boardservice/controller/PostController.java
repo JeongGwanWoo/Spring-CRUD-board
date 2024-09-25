@@ -34,19 +34,11 @@ public class PostController {
         post.setName(postForm.getName());
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
-        post.setPostDate(dateTime());
         post.setViews(0);
-        post.setStatus(PostStatus.INCLUDE);
 
         postsService.save(post);
 
         return "redirect:/board/list";
-    }
-
-    public String dateTime() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        String parsedLocalDateTimeNow = localDateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-        return parsedLocalDateTimeNow;
     }
 
     SearchStatus searchStatus = SearchStatus.TITLE;

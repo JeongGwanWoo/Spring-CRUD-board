@@ -23,14 +23,12 @@ public class PostsService {
     @Autowired
     PostsRepository postsRepository;
 
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter dtFmt = DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm:ss");
-    String ldtStr = now.format(dtFmt);
-
     /**
      * 글 쓰기
      */
     public Long save(Posts post) {
+        post.setPostDate(dateTime());
+        post.setStatus(PostStatus.INCLUDE);
         postsRepository.save(post);
         return post.getId();
     }
@@ -54,7 +52,13 @@ public class PostsService {
         findPost.setName(name);
         findPost.setTitle(title);
         findPost.setContent(content);
-        findPost.setPostEditDate(ldtStr);
+        findPost.setPostEditDate(dateTime());
+    }
+
+    public String dateTime() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String parsedLocalDateTimeNow = localDateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+        return parsedLocalDateTimeNow;
     }
 
     /**
@@ -62,7 +66,7 @@ public class PostsService {
      */
     public void postDelete(Long postId) {
         Posts findPost = postsRepository.findOne(postId);
-        findPost.setPostDeleteDate(ldtStr);
+        findPost.setPostDeleteDate(dateTime());
         findPost.setStatus(PostStatus.DELETE);
     }
 
