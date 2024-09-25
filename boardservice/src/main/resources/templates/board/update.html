@@ -71,8 +71,10 @@
                 <textarea class="createContent" th:field="*{content}" placeholder="내용을 입력하세요"></textarea>
             </div>
         </div>
-        <button type="submit" onclick="return confirm('수정하시겠습니까?')">수정</button>
-        <button type="button" th:onclick="|location.href='@{/board/list}'|">취소</button>
+        <button type="submit" onclick="return confirm('수정하시겠습니까?')"
+                class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">수정</button>
+        <button type="button" th:onclick="|location.href='@{/board/list}'|"
+                class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">취소</button>
     </form>
 </div>
 </body>
