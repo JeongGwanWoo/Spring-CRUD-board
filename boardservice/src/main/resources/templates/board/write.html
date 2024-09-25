@@ -36,7 +36,11 @@
     }
 </style>
 <body>
-
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/board/list">게시판</a>
+    </div>
+</nav>
 <div class="layout">
     <h2>글 작성 양식</h2>
     <form th:action="@{/board/write}" th:object="${form}" method="post">

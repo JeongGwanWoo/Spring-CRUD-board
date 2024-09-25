@@ -20,16 +20,63 @@
     }
     .content{
         margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .number {
+        text-align: center;
+        width: 5%;
+    }
+    .title {
+        width: 60%;
+        text-align: center;
+    }
+    .title2 {
+        color: black;
+        display:table-cell;
+        vertical-align:center;
+    }
+    .name {
+        width: 5%;
+        text-align: center;
+    }
+    .date{
+        width: 20%;
+        text-align: center;
+    }
+    .views{
+        width: 5%;
+        text-align: center;
+    }
+    .edit{
+        margin-left: 10px;
+    }
+    .container {
+        display: flex;
+    }
+    .line{
+        border-bottom:2px solid black;
     }
 
 </style>
 <body>
-<div class="layout">
-    <div>
-        <h2>
-            <a href="/board/list">게시판</a>
-        </h2>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/board/list">게시판</a>
+        <form class="d-flex" role="search">
+            <select name="type" th:if="${searchStatus.name() == 'TITLE'}">
+                <option value="title" selected="selected">제목</option>
+                <option value="name" >작성자</option>
+            </select>
+            <select name="type" th:if="${searchStatus.name() == 'NAME'}">
+                <option value="title">제목</option>
+                <option value="name" selected="selected">작성자</option>
+            </select>
+            <input class="form-control me-2" name="keyward" type="text" placeholder="검색어 입력" th:value="${keyward}" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
+</nav>
+<div class="layout">
     <div>
         <p th:text="${form.title}">제목</p>
     </div>
@@ -38,9 +85,56 @@
         <span th:text="${form.postDate}">2024.09.17 00:00:00</span>
         <span th:text="|조회 ${form.views}|">99</span>
     </div>
+    <hr/>
     <div>
         <p class="content" th:text="${form.content}">내용</p>
     </div>
+    <hr/>
+    <div>
+        <button type="button" onclick="location.href='/board/write'">글쓰기</button>
+        <form style="float: right;" name="delete" th:action="@{/board/{id}/delete (id=${form.id})}" th:object="${form}" method="post">
+            <button type="button" th:onclick="|location.href='@{/board/{id}/edit (id=${post.id})}'|">수정</button>
+            <button tpye="button" onclick="delete()">삭제</button>
+        </form>
+    </div>
+    <hr/>
+    <table>
+        <thead>
+        <tr>
+            <th class="number">번호</th>
+            <th class="title">제목</th>
+            <th class="name">작성자</th>
+            <th class="date">날짜</th>
+            <th class="views">조회</th>
+        </tr>
+        <tr>
+            <th class="line"></th>
+            <th class="line"></th>
+            <th class="line"></th>
+            <th class="line"></th>
+            <th class="line"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--목록에서 INCLUDE 상태인 게시글만 표시하는 if문 추가(삭제부분)-->
+        <tr th:each = "post:${posts}" th:if="${post.status.name() == 'INCLUDE'}">
+            <td style="text-align: center;" th:text="${post.id}">1</td>
+            <td>
+                <a th:href="@{/board/{id}/post (id=${post.id})}">
+                    <p class="title2" th:text="${post.title}">제목입니다.</p>
+                </a>
+            </td>
+            <td style="text-align: center;" th:text="${post.name}">정관우</td>
+            <td style="text-align: center;" th:text="${post.postDate}">2024.00.00 00:00:00</td>
+            <td style="text-align: center;" th:text="${post.views}">0</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
+<script type="text/javascript">
+    function delete() {
+        $("#delete").submit();
+    }
+</script>
 </html>

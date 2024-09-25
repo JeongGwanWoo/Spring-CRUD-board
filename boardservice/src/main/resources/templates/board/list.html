@@ -15,8 +15,13 @@
         margin: 0 auto;
         margin-top: 100px;
     }
+    .number {
+        text-align: center;
+        background-color: chartreuse;
+        width: 5%;
+    }
     .title {
-        width: 500px;
+        width: 60%;
         text-align: center;
     }
     .title2 {
@@ -25,50 +30,65 @@
         vertical-align:center;
     }
     .name {
-        width: 100px;
+        width: 5%;
         text-align: center;
     }
-    .search {
-        resize: none;
-        width: 300px;
-        length: 20px;
-    }
     .date{
+        width: 20%;
         text-align: center;
     }
     .views{
+        width: 5%;
         text-align: center;
     }
     .edit{
         margin-left: 10px;
     }
+    .container {
+        display: flex;
+    }
+    .line{
+        border-bottom:2px solid black;
+    }
 </style>
 <body>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/board/list">게시판</a>
+        <form class="d-flex" role="search">
+            <select name="type" th:if="${searchStatus.name() == 'TITLE'}">
+                <option value="title" selected="selected">제목</option>
+                <option value="name" >작성자</option>
+            </select>
+            <select name="type" th:if="${searchStatus.name() == 'NAME'}">
+                <option value="title">제목</option>
+                <option value="name" selected="selected">작성자</option>
+            </select>
+            <input class="form-control me-2" name="keyward" type="text" placeholder="검색어 입력" th:value="${keyward}" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
     <div class="layout">
-        <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/board/list">게시판</a>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" name="keyward" type="text" placeholder="검색어 입력" th:value="${keyward}" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
-<!--        <h2>-->
-<!--            <a href="/board/list">게시판</a>-->
-<!--        </h2>-->
         <div>
-<!--            <button type="button" onclick="location.href='/board/write'">글쓰기</button>-->
             <button type="button" onclick="location.href='/board/write'">글쓰기</button>
         </div>
+        <hr/>
         <table>
             <thead>
                 <tr>
-                    <th>글번호</th>
+                    <th class="name">번호</th>
                     <th class="title">제목</th>
                     <th class="name">작성자</th>
                     <th class="date">날짜</th>
                     <th class="views">조회</th>
+                </tr>
+                <tr>
+                    <th class="line"></th>
+                    <th class="line"></th>
+                    <th class="line"></th>
+                    <th class="line"></th>
+                    <th class="line"></th>
                 </tr>
             </thead>
             <tbody>
@@ -80,30 +100,12 @@
                             <p class="title2" th:text="${post.title}">제목입니다.</p>
                         </a>
                     </td>
-                    <td style="text-align: center;" th:text="${post.name}">정관우</td>
-                    <td style="text-align: center;" th:text="${post.postDate}">0년0월0일</td>
-                    <td style="text-align: center;" th:text="${post.views}">0</td>
-                    <td>
-<!--                        <a class="edit" href="#" th:href="@{/board/{id}/edit (id=${post.id})}">수정</a>-->
-                        <button type="button" th:onclick="|location.href='@{/board/{id}/edit (id=${post.id})}'|">수정</button>
-                    </td>
+                    <td style="text-align: center;" th:text="${post.name}">정관우ㅇㅇㅇㅇ</td>
+                    <td style="text-align: center;" th:text="${post.postDate}">2024.00.00 00:00:00</td>
+                    <td style="text-align: center;" th:text="${post.views}">00</td>
                 </tr>
             </tbody>
         </table>
-        <div>
-            <form th:href="@{/board/list}"  method="get" id="searchForm">
-                <select name="type" th:if="${searchStatus.name() == 'TITLE'}">
-                    <option value="title" selected="selected">제목</option>
-                    <option value="name" >작성자</option>
-                </select>
-                <select name="type" th:if="${searchStatus.name() == 'NAME'}">
-                    <option value="title">제목</option>
-                    <option value="name" selected="selected">작성자</option>
-                </select>
-<!--                <input class="search" type="text" name="keyward" placeholder="검색어 입력" th:value="${keyward}">-->
-<!--                <button type="submit">검색</button>-->
-            </form>
-        </div>
     </div>
 </body>
 </html>

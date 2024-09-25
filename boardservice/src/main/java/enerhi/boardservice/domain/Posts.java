@@ -16,6 +16,7 @@ public class Posts {
 
     private String name; //글 작성자 이름
     private String title; //글 제목
+    @Column(length = 500)
     private String content; //글 내용
 
     private String postDate; //생성 되었을 때
