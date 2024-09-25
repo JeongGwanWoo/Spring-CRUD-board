@@ -32,7 +32,6 @@ public class PostController {
         post.setName(postForm.getName());
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
-        post.setViews(0);
 
         postsService.save(post);
 

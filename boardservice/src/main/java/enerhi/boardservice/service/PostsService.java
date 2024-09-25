@@ -29,6 +29,7 @@ public class PostsService {
     public Long save(Posts post) {
         post.setPostDate(dateTime());
         post.setStatus(PostStatus.INCLUDE);
+        post.setViews(0);
         postsRepository.save(post);
         return post.getId();
     }
