@@ -7,6 +7,9 @@
 </head>
 
 <style>
+    body {
+        font-family: 'S-CoreDream-3Light', serif;
+    }
     a {
         text-decoration-line: none;
     }
@@ -47,13 +50,22 @@
         display: flex;
     }
     .line{
-        border-bottom:2px solid black;
+        border-bottom:2px solid;
+        border-color: #534847;
     }
+
+    @font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+    }
+
 </style>
 <body>
-<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+<nav class="navbar" style="background-color: #FADAD8;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/board/list">게시판</a>
+        <a href="/board/list" style="color: #534847; font-weight: bold; font-size: 30px; margin-left: 10px;">게 시 판</a>
         <form class="d-flex" role="search">
             <select name="type" th:if="${searchStatus.name() == 'TITLE'}">
                 <option value="title" selected="selected">제목</option>
@@ -64,13 +76,14 @@
                 <option value="name" selected="selected">작성자</option>
             </select>
             <input class="form-control me-2" name="keyward" type="text" placeholder="검색어 입력" th:value="${keyward}" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-dark" style="color: #FADAD8; font-weight: bold;" type="submit">Search</button>
         </form>
     </div>
 </nav>
     <div class="layout">
         <div>
-            <button type="button" onclick="location.href='/board/write'">글쓰기</button>
+            <button type="button" onclick="location.href='/board/write'"
+                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">글쓰기</button>
         </div>
         <hr/>
         <table>

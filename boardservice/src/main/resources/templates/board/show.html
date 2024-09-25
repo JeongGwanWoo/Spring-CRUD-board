@@ -10,6 +10,9 @@
     a {
         text-decoration-line: none;
     }
+    body {
+        font-family: 'S-CoreDream-3Light', serif;
+    }
     .layout {
         width: 1000px;
         margin: 0 auto;
@@ -27,7 +30,7 @@
         width: 5%;
     }
     .title {
-        width: 600px;
+        width: 500px;
         text-align: center;
     }
     .title2 {
@@ -54,14 +57,21 @@
         display: flex;
     }
     .line{
-        border-bottom:2px solid black;
+        border-bottom:2px solid;
+        border-color: #534847;
     }
 
+    @font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+    }
 </style>
 <body>
-<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+<nav class="navbar" style="background-color: #FADAD8;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/board/list">게시판</a>
+        <a href="/board/list" style="color: #534847; font-weight: bold; font-size: 30px; margin-left: 10px;">게 시 판</a>
         <form class="d-flex" role="search">
             <select name="type" th:if="${searchStatus.name() == 'TITLE'}">
                 <option value="title" selected="selected">제목</option>
@@ -72,7 +82,7 @@
                 <option value="name" selected="selected">작성자</option>
             </select>
             <input class="form-control me-2" name="keyward" type="text" placeholder="검색어 입력" th:value="${keyward}" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-dark" style="color: #FADAD8; font-weight: bold;" type="submit">Search</button>
         </form>
     </div>
 </nav>
@@ -100,20 +110,20 @@
     <hr/>
     <table>
         <thead>
-        <tr>
-            <th class="number">번호</th>
-            <th class="title">제목</th>
-            <th class="name">작성자</th>
-            <th class="date">날짜</th>
-            <th class="views">조회</th>
-        </tr>
-        <tr>
-            <th class="line"></th>
-            <th class="line"></th>
-            <th class="line"></th>
-            <th class="line"></th>
-            <th class="line"></th>
-        </tr>
+            <tr>
+                <th class="name">번호</th>
+                <th class="title">제목</th>
+                <th class="name">작성자</th>
+                <th class="date">날짜</th>
+                <th class="views">조회</th>
+            </tr>
+            <tr>
+                <th class="line"></th>
+                <th class="line"></th>
+                <th class="line"></th>
+                <th class="line"></th>
+                <th class="line"></th>
+            </tr>
         </thead>
         <tbody>
         <!--목록에서 INCLUDE 상태인 게시글만 표시하는 if문 추가(삭제부분)-->
@@ -124,9 +134,9 @@
                     <p class="title2" th:text="${post.title}">제목입니다.</p>
                 </a>
             </td>
-            <td style="text-align: center;" th:text="${post.name}">정관우</td>
+            <td style="text-align: center;" th:text="${post.name}">정관우ㅇㅇㅇㅇ</td>
             <td style="text-align: center;" th:text="${post.postDate}">2024.00.00 00:00:00</td>
-            <td style="text-align: center;" th:text="${post.views}">0</td>
+            <td style="text-align: center;" th:text="${post.views}">00</td>
         </tr>
         </tbody>
     </table>
