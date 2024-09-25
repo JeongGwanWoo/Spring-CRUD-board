@@ -80,7 +80,7 @@ public class PostsService {
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (("postView"+ postId).equals(cookie.getName())) {
+                if (("postView_"+ postId).equals(cookie.getName())) {
                     log.info("["+ postId + "]"+"조회수 중복 발생!");
                     isVisited = true; // 쿠키가 존재하면 이미 방문한 것으로 간주
                     break;
@@ -93,8 +93,8 @@ public class PostsService {
             postViews(postId); // 조회수 증가 함수 호출
 
             // 방문 기록을 위한 쿠키 생성
-            Cookie cookie = new Cookie(("postView"+postId), "true");
-            cookie.setMaxAge(60 * 60 * 24); // 쿠키 유효 기간 설정 (초 단위)
+            Cookie cookie = new Cookie(("postView_"+postId), "true");
+            cookie.setMaxAge(20); // 쿠키 유효 기간 설정 (초 단위)
             cookie.setPath("/"); // 쿠키의 유효 범위 설정
             response.addCookie(cookie); // 쿠키 추가
         }
