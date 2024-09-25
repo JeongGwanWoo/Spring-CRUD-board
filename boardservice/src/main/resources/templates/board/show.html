@@ -100,10 +100,13 @@
     </div>
     <hr/>
     <div>
-        <button type="button" onclick="location.href='/board/write'">글쓰기</button>
+        <button type="button" onclick="location.href='/board/write'"
+                class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">글쓰기</button>
         <form style="float: right;" name="delete" th:action="@{/board/{id}/delete (id=${form.id})}" th:object="${form}" method="post">
-            <button type="button" th:onclick="|location.href='@{/board/{id}/edit (id=${post.id})}'|">수정</button>
-            <button onclick="return confirm('삭제하시겠습니까?')">삭제</button>
+            <button type="button" th:onclick="|location.href='@{/board/{id}/edit (id=${post.id})}'|"
+                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">수정</button>
+            <button onclick="return confirm('삭제하시겠습니까?')"
+                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">삭제</button>
         </form>
     </div>
     <hr/>
