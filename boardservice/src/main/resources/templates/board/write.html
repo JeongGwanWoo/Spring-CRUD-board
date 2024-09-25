@@ -35,7 +35,7 @@
     }
     .createContent{
         width: 100%;
-        height: 100px;
+        height: 400px;
         resize: none;
         margin-top: 5px;
         margin-bottom: 5px;
@@ -62,17 +62,14 @@
     <hr/>
     <form th:action="@{/board/write}" th:object="${form}" method="post" name="write">
         <div>
-            <div>
-                <textarea class="createName" th:field="*{name}" rows="1" placeholder="이름을 입력하세요"></textarea>
-                <textarea class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>
-            </div>
+            <textarea class="createName" th:field="*{name}" rows="1" placeholder="이름을 입력하세요"></textarea>
+            <textarea class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>
         </div>
         <div>
-            <div>
-                <textarea class="createContent" th:field="*{content}" rows="5" placeholder="내용을 입력하세요"></textarea>
-            </div>
+            <textarea class="createContent" th:field="*{content}" rows="5" placeholder="내용을 입력하세요"></textarea>
         </div>
-        <button class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">작성</button>
+        <button type="submit" onclick="return confirm('작성하시겠습니까?')"
+                class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">작성</button>
         <button type="button" onclick="cancelConfirm();"
                 class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">취소</button>
     </form>
