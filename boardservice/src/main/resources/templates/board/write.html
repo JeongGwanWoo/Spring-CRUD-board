@@ -61,13 +61,15 @@
             </div>
         </div>
         <button>작성</button>
-        <button type="button" th:onclick="|location.href='@{/board/list}'|">취소</button>
+        <button type="button" onclick="cancelConfirm();">취소</button>
     </form>
 </div>
 </body>
 <script type="text/javascript">
-    function write() {
-        $("#write").submit();
+    function cancelConfirm() {
+        if(confirm('취소하시겠습니까?')){
+            location.href='/board/list';
+        }
     }
 </script>
 
