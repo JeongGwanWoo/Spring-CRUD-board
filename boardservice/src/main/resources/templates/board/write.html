@@ -47,9 +47,9 @@
 </nav>
 <div class="layout">
     <h2>글 작성 양식</h2>
+    <hr/>
     <form th:action="@{/board/write}" th:object="${form}" method="post" name="write">
         <div>
-            <hr/>
             <div>
                 <textarea class="createName" th:field="*{name}" rows="1" placeholder="이름을 입력하세요"></textarea>
                 <textarea class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>
