@@ -94,7 +94,7 @@
         <button type="button" onclick="location.href='/board/write'">글쓰기</button>
         <form style="float: right;" name="delete" th:action="@{/board/{id}/delete (id=${form.id})}" th:object="${form}" method="post">
             <button type="button" th:onclick="|location.href='@{/board/{id}/edit (id=${post.id})}'|">수정</button>
-            <button tpye="button" onclick="delete()">삭제</button>
+            <button>삭제</button>
         </form>
     </div>
     <hr/>
@@ -132,9 +132,4 @@
     </table>
 </div>
 </body>
-<script type="text/javascript">
-    function delete() {
-        $("#delete").submit();
-    }
-</script>
 </html>
