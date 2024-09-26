@@ -114,6 +114,8 @@ public class PostController {
     //글 내용 조회
     @GetMapping("/board/{postId}/post")
     public String postShow(@PathVariable("postId") Long postId, Model model, HttpServletRequest request, HttpServletResponse response,
+                           @RequestParam(value = "postnumber", required = false, defaultValue = "30") int pagePostNumber,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") int nowPage,
                            @RequestParam(value = "type", required = false, defaultValue = "title") String type,
                            @RequestParam(value = "keyward", required = false) String keyward) {
         Posts post = postsService.findOne(postId);
@@ -128,8 +130,28 @@ public class PostController {
         postForm.setViews(post.getViews());
 
         model.addAttribute("post",postForm);
-//        SearchList(model, type, keyward);
 
+        if (keyward != null) {
+            if (type.equals("title")) {
+                searchStatus = SearchStatus.TITLE;
+                List<Posts> posts = postsService.postSearch(type, keyward);
+                model.addAttribute("posts", posts);
+                model.addAttribute("keyward", keyward);
+                model.addAttribute("searchStatus", searchStatus);
+            } else {
+                searchStatus = SearchStatus.NAME;
+                List<Posts> posts = postsService.postSearch(type, keyward);
+                model.addAttribute("posts", posts);
+                model.addAttribute("keyward", keyward);
+                model.addAttribute("searchStatus", searchStatus);
+            }
+        } else {
+//            List<Posts> posts = postsService.findPosts();
+            List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
+            model.addAttribute("posts", posts);
+            model.addAttribute("keyward", null);
+            model.addAttribute("searchStatus", searchStatus);
+        }
 
         model.addAttribute("form", postForm);
         return "/board/show";

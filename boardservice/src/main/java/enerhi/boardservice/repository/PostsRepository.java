@@ -27,11 +27,11 @@ public class PostsRepository {
     }
 
     public List<Posts> findName(String keyward) {
-        return em.createQuery("select p from Posts as p where name like '%" + keyward + "%' order by id desc", Posts.class).getResultList();
+        return em.createQuery("select p from Posts as p where name like '%" + keyward + "%' and status like 'INCLUDE' order by id desc", Posts.class).getResultList();
     }
 
     public List<Posts> findTitle(String keyward) {
-        return em.createQuery("select p from Posts as p where title like '%" + keyward + "%' order by id desc", Posts.class).getResultList();
+        return em.createQuery("select p from Posts as p where title like '%" + keyward + "%' and status like 'INCLUDE' order by id desc", Posts.class).getResultList();
     }
 
     public List<Posts> page(int nowPage, int pagePostNumber) {
