@@ -45,6 +45,8 @@ public class PostController {
     //글 목록 조회
     @GetMapping("/board/list")
     public String postList(Model model,
+                           @RequestParam(value = "postnumber", required = false, defaultValue = "30") int pagePostNumber,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") int nowPage,
                            @RequestParam(value = "type", required = false, defaultValue = "title") String type,
                            @RequestParam(value = "keyward", required = false) String keyward) {
 
@@ -66,7 +68,8 @@ public class PostController {
                 model.addAttribute("searchStatus", searchStatus);
             }
         } else {
-            List<Posts> posts = postsService.findPosts();
+//            List<Posts> posts = postsService.findPosts();
+            List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
             model.addAttribute("posts", posts);
             model.addAttribute("keyward", null);
             model.addAttribute("searchStatus", searchStatus);
@@ -125,26 +128,8 @@ public class PostController {
         postForm.setViews(post.getViews());
 
         model.addAttribute("post",postForm);
-        if (keyward != null) {
-            if (type.equals("title")) {
-                searchStatus = SearchStatus.TITLE;
-                List<Posts> posts = postsService.postSearch(type, keyward);
-                model.addAttribute("posts", posts);
-                model.addAttribute("keyward", keyward);
-                model.addAttribute("searchStatus", searchStatus);
-            } else {
-                searchStatus = SearchStatus.NAME;
-                List<Posts> posts = postsService.postSearch(type, keyward);
-                model.addAttribute("posts", posts);
-                model.addAttribute("keyward", keyward);
-                model.addAttribute("searchStatus", searchStatus);
-            }
-        } else {
-            List<Posts> posts = postsService.findPosts();
-            model.addAttribute("posts", posts);
-            model.addAttribute("keyward", null);
-            model.addAttribute("searchStatus", searchStatus);
-        }
+//        SearchList(model, type, keyward);
+
 
         model.addAttribute("form", postForm);
         return "/board/show";

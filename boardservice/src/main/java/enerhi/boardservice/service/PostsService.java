@@ -120,7 +120,7 @@ public class PostsService {
     /**
      * 페이징
      */
-    public List<Posts> postPage(int maxPage, int nowPage, int pagePostNumber) {
+    public List<Posts> postPage(int nowPage, int pagePostNumber) {
         return postsRepository.page(nowPage, pagePostNumber);
     }
 }
