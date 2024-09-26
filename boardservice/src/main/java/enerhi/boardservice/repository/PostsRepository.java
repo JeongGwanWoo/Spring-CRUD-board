@@ -33,4 +33,11 @@ public class PostsRepository {
     public List<Posts> findTitle(String keyward) {
         return em.createQuery("select p from Posts as p where title like '%" + keyward + "%' order by id desc", Posts.class).getResultList();
     }
+
+    public List<Posts> page(int nowPage, int pagePostNumber) {
+        return em.createQuery("select * " +
+                "from (select rownum num,* from posts where status like 'INCLUDE' order by id desc) " +
+                "where num between " + ((pagePostNumber * nowPage)-(pagePostNumber - 1)) +
+                "and " + (pagePostNumber * nowPage), Posts.class).getResultList();
+    }
 }

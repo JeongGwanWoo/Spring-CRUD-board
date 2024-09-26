@@ -116,4 +116,12 @@ public class PostsService {
             return postsRepository.findTitle(keyward);
         }
     }
+
+    /**
+     * 페이징
+     */
+    public List<Posts> postPage(int maxPage, int nowPage, int pagePostNumber) {
+
+
+    }
 }
