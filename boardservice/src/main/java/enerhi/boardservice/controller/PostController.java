@@ -53,6 +53,13 @@ public class PostController {
         log.info("검색 유형 : " + type);
         log.info("검색 키워드 : " + keyward);
 
+        SearchList(model, pagePostNumber, nowPage, type, keyward);
+
+        return "board/list";
+    }
+
+    //글 검색
+    private void SearchList(Model model, int pagePostNumber, int nowPage, String type, String keyward) {
         if (keyward != null) {
             if (type.equals("title")) {
                 searchStatus = SearchStatus.TITLE;
@@ -68,16 +75,23 @@ public class PostController {
                 model.addAttribute("searchStatus", searchStatus);
             }
         } else {
-//            List<Posts> posts = postsService.findPosts();
             List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
             model.addAttribute("posts", posts);
             model.addAttribute("keyward", null);
             model.addAttribute("searchStatus", searchStatus);
         }
-
-        return "board/list";
     }
 
+    //페이지 개수
+    public int pageNumber(int pagePostNumber, List<Posts> posts) {
+        int postsSize = posts.size();
+        double pageNumber = (double)postsSize / pagePostNumber;
+        if (pageNumber % 1 > 0) {
+            return (int)pageNumber + 1;
+        } else {
+            return (int)pageNumber;
+        }
+    }
 
     //글 수정
     @GetMapping("/board/{postId}/edit")
@@ -131,27 +145,7 @@ public class PostController {
 
         model.addAttribute("post",postForm);
 
-        if (keyward != null) {
-            if (type.equals("title")) {
-                searchStatus = SearchStatus.TITLE;
-                List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
-                model.addAttribute("posts", posts);
-                model.addAttribute("keyward", keyward);
-                model.addAttribute("searchStatus", searchStatus);
-            } else {
-                searchStatus = SearchStatus.NAME;
-                List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
-                model.addAttribute("posts", posts);
-                model.addAttribute("keyward", keyward);
-                model.addAttribute("searchStatus", searchStatus);
-            }
-        } else {
-//            List<Posts> posts = postsService.findPosts();
-            List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
-            model.addAttribute("posts", posts);
-            model.addAttribute("keyward", null);
-            model.addAttribute("searchStatus", searchStatus);
-        }
+        SearchList(model, pagePostNumber, nowPage, type, keyward);
 
         model.addAttribute("form", postForm);
         return "/board/show";
