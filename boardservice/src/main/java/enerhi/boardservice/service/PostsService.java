@@ -109,6 +109,14 @@ public class PostsService {
     /**
      * 글 검색
      */
+    public List<Posts> postSearch(String type, String keyward) {
+        if (type.equals("name")) {
+            return postsRepository.findName(keyward);
+        } else {
+            return postsRepository.findTitle(keyward);
+        }
+    }
+
     public List<Posts> postSearch(String type, String keyward, int nowPage, int pagePostNumber) {
         if (type.equals("name")) {
             return postsRepository.findName(keyward, nowPage, pagePostNumber);

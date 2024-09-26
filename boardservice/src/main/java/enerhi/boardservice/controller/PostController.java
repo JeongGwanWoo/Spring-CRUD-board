@@ -63,19 +63,51 @@ public class PostController {
         if (keyward != null) {
             if (type.equals("title")) {
                 searchStatus = SearchStatus.TITLE;
+
+                List<Posts> postAll = postsService.postSearch(type, keyward);
+
+                int pageNumber = pageNumber(pagePostNumber, postAll);
+                int startPage = Math.max(nowPage - 4, 1);
+                int endPage = Math.min(nowPage + 5, pageNumber);
+
                 List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
+
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+                model.addAttribute("nowPage", nowPage);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
             } else {
                 searchStatus = SearchStatus.NAME;
+
+                List<Posts> postAll = postsService.postSearch(type, keyward);
+
+                int pageNumber = pageNumber(pagePostNumber, postAll);
+                int startPage = Math.max(nowPage - 4, 1);
+                int endPage = Math.min(nowPage + 5, pageNumber);
+
                 List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
+
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+                model.addAttribute("nowPage", nowPage);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
             }
         } else {
+//            List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
+            List<Posts> postAll = postsService.findPosts();
+            int pageNumber = pageNumber(pagePostNumber, postAll);
+            int startPage = Math.max(nowPage - 4, 1);
+            int endPage = Math.min(nowPage + 5, pageNumber);
+
             List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
+
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("nowPage", nowPage);
             model.addAttribute("posts", posts);
             model.addAttribute("keyward", null);
             model.addAttribute("searchStatus", searchStatus);
@@ -86,12 +118,16 @@ public class PostController {
     public int pageNumber(int pagePostNumber, List<Posts> posts) {
         int postsSize = posts.size();
         double pageNumber = (double)postsSize / pagePostNumber;
-        if (pageNumber % 1 > 0) {
+        log.info("::::::::::::"+pageNumber);
+        log.info("::::::::::::"+postsSize);
+        log.info("::::::::::::"+pagePostNumber);
+        if (pageNumber % 1 < 1) {
             return (int)pageNumber + 1;
         } else {
             return (int)pageNumber;
         }
     }
+
 
     //글 수정
     @GetMapping("/board/{postId}/edit")
