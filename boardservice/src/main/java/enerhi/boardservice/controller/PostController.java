@@ -56,13 +56,13 @@ public class PostController {
         if (keyward != null) {
             if (type.equals("title")) {
                 searchStatus = SearchStatus.TITLE;
-                List<Posts> posts = postsService.postSearch(type, keyward);
+                List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
             } else {
                 searchStatus = SearchStatus.NAME;
-                List<Posts> posts = postsService.postSearch(type, keyward);
+                List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
@@ -134,13 +134,13 @@ public class PostController {
         if (keyward != null) {
             if (type.equals("title")) {
                 searchStatus = SearchStatus.TITLE;
-                List<Posts> posts = postsService.postSearch(type, keyward);
+                List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
             } else {
                 searchStatus = SearchStatus.NAME;
-                List<Posts> posts = postsService.postSearch(type, keyward);
+                List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);

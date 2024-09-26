@@ -26,12 +26,22 @@ public class PostsRepository {
         return em.createQuery("select p from Posts as p order by id desc", Posts.class).getResultList();
     }
 
-    public List<Posts> findName(String keyward) {
-        return em.createQuery("select p from Posts as p where name like '%" + keyward + "%' and status like 'INCLUDE' order by id desc", Posts.class).getResultList();
+    public List<Posts> findName(String keyward, int nowPage, int pagePostNumber) {
+        int first = ((pagePostNumber * nowPage) - 1)-(pagePostNumber - 1);
+        int max = pagePostNumber;
+        return em.createQuery("select p from Posts as p where name like '%" + keyward + "%' and status like 'INCLUDE' order by id desc", Posts.class)
+                .setFirstResult(first)
+                .setMaxResults(max)
+                .getResultList();
     }
 
-    public List<Posts> findTitle(String keyward) {
-        return em.createQuery("select p from Posts as p where title like '%" + keyward + "%' and status like 'INCLUDE' order by id desc", Posts.class).getResultList();
+    public List<Posts> findTitle(String keyward, int nowPage, int pagePostNumber) {
+        int first = ((pagePostNumber * nowPage) - 1)-(pagePostNumber - 1);
+        int max = pagePostNumber;
+        return em.createQuery("select p from Posts as p where title like '%" + keyward + "%' and status like 'INCLUDE' order by id desc", Posts.class)
+                .setFirstResult(first)
+                .setMaxResults(max)
+                .getResultList();
     }
 
     public List<Posts> page(int nowPage, int pagePostNumber) {
