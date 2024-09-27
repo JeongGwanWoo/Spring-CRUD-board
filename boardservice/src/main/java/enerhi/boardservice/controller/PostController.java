@@ -68,12 +68,17 @@ public class PostController {
 
                 int pageNumber = pageNumber(pagePostNumber, postAll);
                 int startPage = Math.max(nowPage - 4, 1);
-                int endPage = Math.min(nowPage + 5, pageNumber);
+                int endPage = Math.min(nowPage + 4, pageNumber);
 
                 List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
 
+                if (nowPage <= 5 && pageNumber >= 9) {
+                    model.addAttribute("endPage", 9);
+                } else {
+                    model.addAttribute("endPage", endPage);
+                }
+
                 model.addAttribute("startPage", startPage);
-                model.addAttribute("endPage", endPage);
                 model.addAttribute("nowPage", nowPage);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
@@ -85,28 +90,37 @@ public class PostController {
 
                 int pageNumber = pageNumber(pagePostNumber, postAll);
                 int startPage = Math.max(nowPage - 4, 1);
-                int endPage = Math.min(nowPage + 5, pageNumber);
+                int endPage = Math.min(nowPage + 4, pageNumber);
 
                 List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
 
+                if (nowPage <= 5 && pageNumber >= 9) {
+                    model.addAttribute("endPage", 9);
+                } else {
+                    model.addAttribute("endPage", endPage);
+                }
+
                 model.addAttribute("startPage", startPage);
-                model.addAttribute("endPage", endPage);
                 model.addAttribute("nowPage", nowPage);
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
             }
         } else {
-//            List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
             List<Posts> postAll = postsService.findPosts();
             int pageNumber = pageNumber(pagePostNumber, postAll);
             int startPage = Math.max(nowPage - 4, 1);
-            int endPage = Math.min(nowPage + 5, pageNumber);
+            int endPage = Math.min(nowPage + 4, pageNumber);
 
             List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
 
+            if (nowPage <= 5 && pageNumber >= 9) {
+                model.addAttribute("endPage", 9);
+            } else {
+                model.addAttribute("endPage", endPage);
+            }
+
             model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
             model.addAttribute("nowPage", nowPage);
             model.addAttribute("posts", posts);
             model.addAttribute("keyward", null);

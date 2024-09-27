@@ -14,7 +14,7 @@ public class TestDB {
     @Test
     void TestDataBase() {
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 1000; i++) {
             Posts post = new Posts();
             post.setName("관우_" + (i + 1));
             post.setTitle("테스트 " + (i + 1) + "번 입니다.");
