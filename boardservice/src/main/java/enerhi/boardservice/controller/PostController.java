@@ -42,6 +42,7 @@ public class PostController {
     }
 
     SearchStatus searchStatus = SearchStatus.TITLE;
+
     //글 목록 조회
     @GetMapping("/board/list")
     public String postList(Model model,
@@ -60,22 +61,25 @@ public class PostController {
 
     //글 검색
     private void SearchList(Model model, int pagePostNumber, int nowPage, String type, String keyward) {
-        if (keyward != null) {
-            if (type.equals("title")) {
-                searchStatus = SearchStatus.TITLE;
+        if (keyward != null) { //검색 키워드가 있을 경우
+            if (type.equals("title")) { //검색 타입이 제목일 경우
+                searchStatus = SearchStatus.TITLE; //검색 상태를 타이틀로 변경
 
-                List<Posts> postAll = postsService.postSearch(type, keyward);
+                List<Posts> postAll = postsService.postSearch(type, keyward); //타입과 키워드로 글을 가져옴
 
+                //페이지에 보여줄 글 수: 기본값 30, 모든 글 개수로 페이지 수 세기
                 int pageNumber = pageNumber(pagePostNumber, postAll);
-                int startPage = Math.max(nowPage - 4, 1);
-                int endPage = Math.min(nowPage + 4, pageNumber);
+                int startPage = Math.max(nowPage - 4, 1); //시작 페이지
+                int endPage = Math.min(nowPage + 4, pageNumber); //현재 페이지에 대한 보여줄 끝 페이지
 
+                //타입, 키워드, 현재페이지, 페이지에 보여줄 글 수로 해당하는 글을 가져옴
                 List<Posts> posts = postsService.postSearch(type, keyward, nowPage, pagePostNumber);
 
+                //현재 페이지가 5이하일 경우 + 총 페이지가 9 이상일 경우
                 if (nowPage <= 5 && pageNumber >= 9) {
-                    model.addAttribute("endPage", 9);
+                    model.addAttribute("endPage", 9); //5페이지 까지는 끝 페이지 9로 고정
                 } else {
-                    model.addAttribute("endPage", endPage);
+                    model.addAttribute("endPage", endPage); //5페이지 이하 외의 경우 고정x
                 }
 
                 model.addAttribute("startPage", startPage);
@@ -83,8 +87,8 @@ public class PostController {
                 model.addAttribute("posts", posts);
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
-            } else {
-                searchStatus = SearchStatus.NAME;
+            } else { //검색 타입이 이름일 경우
+                searchStatus = SearchStatus.NAME; //검색 상태를 이름으로 변경
 
                 List<Posts> postAll = postsService.postSearch(type, keyward);
 
@@ -106,12 +110,13 @@ public class PostController {
                 model.addAttribute("keyward", keyward);
                 model.addAttribute("searchStatus", searchStatus);
             }
-        } else {
-            List<Posts> postAll = postsService.findPosts();
+        } else { //검색 키워드가 없을 경우
+            List<Posts> postAll = postsService.findPosts(); //모든 글을 가져옴
             int pageNumber = pageNumber(pagePostNumber, postAll);
             int startPage = Math.max(nowPage - 4, 1);
             int endPage = Math.min(nowPage + 4, pageNumber);
 
+            //현재 페이지와 페이지 당 글 수로 해당하는 글을 가져옴
             List<Posts> posts = postsService.postPage(nowPage, pagePostNumber);
 
             if (nowPage <= 5 && pageNumber >= 9) {
@@ -123,20 +128,17 @@ public class PostController {
             model.addAttribute("startPage", startPage);
             model.addAttribute("nowPage", nowPage);
             model.addAttribute("posts", posts);
-            model.addAttribute("keyward", null);
+            model.addAttribute("keyward", null); // html 검색 칸 초기화
             model.addAttribute("searchStatus", searchStatus);
         }
     }
 
     //페이지 개수
     public int pageNumber(int pagePostNumber, List<Posts> posts) {
-        int postsSize = posts.size();
-        double pageNumber = (double)postsSize / pagePostNumber;
-        log.info("::::::::::::"+pageNumber);
-        log.info("::::::::::::"+postsSize);
-        log.info("::::::::::::"+pagePostNumber);
-        if (pageNumber % 1 < 1) {
-            return (int)pageNumber + 1;
+        int postsSize = posts.size(); //글 개수
+        double pageNumber = (double)postsSize / pagePostNumber; //글 개수 / 페이지 당 글 수: 나머지 필요 double
+        if (pageNumber % 1 < 1) { //나머지가 있을 경우
+            return (int)pageNumber + 1; //글이 남아있으므로 +1
         } else {
             return (int)pageNumber;
         }
