@@ -132,7 +132,7 @@
         <tr th:each = "post:${posts}" th:if="${post.status.name() == 'INCLUDE'}">
             <td style="text-align: center;" th:text="${post.id}">1</td>
             <td>
-                <a th:href="@{/board/{id}/post (id=${post.id})}">
+                <a th:href="@{/board/{id}/post (id=${post.id}, page = ${page}, type = ${type}, keyward = ${keyward})}">
                     <p class="title2" th:text="${post.title}">제목입니다.</p>
                 </a>
             </td>
@@ -149,6 +149,12 @@
         </tr>
         </tbody>
     </table>
+    <div class="text-center">
+        <th:block th:each="page: ${#numbers.sequence(startPage,endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/board/{id}/post(id=${post.id}, page = ${page}, type = ${type}, keyward = ${keyward})}" th:text="${page}"></a>
+            <strong th:if="${page == nowPage}" th:text="${page}"></strong>
+        </th:block>
+    </div>
     <hr/>
     <div th:replace="fragments/footer :: footer"/>
 </div>
