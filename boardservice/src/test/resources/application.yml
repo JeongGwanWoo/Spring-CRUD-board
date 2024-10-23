@@ -1,9 +1,9 @@
-spring:
-   datasource:
-     url: jdbc:h2:tcp://localhost/~/boardservice
-     username: sa
-     password:
-     driver-class-name: org.h2.Driver
+#spring:
+#   datasource:
+#     url: jdbc:h2:tcp://localhost/~/boardservice
+#     username: sa
+#     password:
+#     driver-class-name: org.h2.Driver
 #
 #   jpa:
 #     hibernate:
@@ -13,6 +13,23 @@ spring:
 #                 show_sql: true
 #         format_sql: true
 #     open-in-view: false
+#  org.hibernate.type: trace
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/boardservice?serverTimezone=Asia/Seoul
+    username: enerhi
+    password: ener1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+
 logging.level:
   org.hibernate.SQL: debug
-#  org.hibernate.type: trace
+  org.hibernate.type.descriptor.sql.BasicBinder: trace
