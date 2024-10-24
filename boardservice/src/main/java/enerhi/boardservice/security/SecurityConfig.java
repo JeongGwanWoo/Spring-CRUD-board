@@ -1,6 +1,6 @@
-package enerhi.boardservice.config;
+package enerhi.boardservice.security;
 
-import enerhi.boardservice.repository.UserRepository;
+import enerhi.boardservice.security.auth.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +33,7 @@ public class SecurityConfig {
         http
                 .sessionManagement(sc -> sc.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않음
                 .addFilter(corsConfig.corsFilter()) // @CorssOrigin(인증X), 시큐리티 필터에 등록 인증O --> 모든 요청 허용.
+                .addFilter(new JwtAuthenticationFilter(authenticationManager))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize

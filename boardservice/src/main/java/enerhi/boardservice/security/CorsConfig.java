@@ -1,4 +1,4 @@
-package enerhi.boardservice.config;
+package enerhi.boardservice.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
