@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<style>
+    .layout {
+        width: 1300px;
+        margin: 0 auto;
+        margin-top: 100px;
+        border: 1px solid #000;
+    }
+    div.right {
+        width: 23%;
+        float: right;
+        box-sizing: border-box;
+
+        background: #ff0;
+    }
+    div.left {
+        width: 77%;
+        float: left;
+        box-sizing: border-box;
+
+        background: #0ff;
+    }
+    .number {
+        text-align: center;
+        width: 5%;
+    }
+    .title {
+        width: 500px;
+        text-align: center;
+    }
+    .title2 {
+        color: black;
+        display:table-cell;
+        vertical-align:center;
+    }
+    .name {
+        width: 10%;
+        text-align: center;
+    }
+    .date{
+        width: 20%;
+        text-align: center;
+    }
+    .views{
+        width: 10%;
+        text-align: center;
+    }
+    .edit{
+        margin-left: 10px;
+    }
+    .container {
+        display: flex;
+    }
+    .line{
+        border-bottom:2px solid;
+        border-color: #534847;
+    }
+</style>
+<body>
+<div class="layout">
+    <div class="left">왼
+        <div>
+            <button type="button" onclick="location.href='/board/write'"
+                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">글쓰기</button>
+        </div>
+        <hr/>
+        <table>
+            <thead>
+            <tr>
+                <th class="name">번호</th>
+                <th class="title">제목</th>
+                <th class="name">작성자</th>
+                <th class="date">날짜</th>
+                <th class="views">조회</th>
+            </tr>
+            <tr>
+                <th class="line"></th>
+                <th class="line"></th>
+                <th class="line"></th>
+                <th class="line"></th>
+                <th class="line"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--목록에서 INCLUDE 상태인 게시글만 표시하는 if문 추가(삭제부분)-->
+            <tr th:each = "post:${posts}" th:if="${post.status.name() == 'INCLUDE'}">
+                <td style="text-align: center;" th:text="${post.id}">1</td>
+                <td>
+                    <a th:href="@{/board/{id}/post (id=${post.id})}">
+                        <p class="title2" th:text="${post.title}">제목입니다.</p>
+                    </a>
+                </td>
+                <td style="text-align: center;" th:text="${post.name}">정관우ㅇㅇㅇㅇ</td>
+                <td style="text-align: center;" th:text="${post.postDate}">2024.00.00 00:00:00</td>
+                <td style="text-align: center;" th:text="${post.views}">00</td>
+            </tr>
+            <tr>
+                <td class="line"></td>
+                <td class="line"></td>
+                <td class="line"></td>
+                <td class="line"></td>
+                <td class="line"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <th:block th:each="page: ${#numbers.sequence(startPage,endPage)}">
+                <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page}, type = ${type}, keyward = ${keyward})}" th:text="${page}"></a>
+                <strong th:if="${page == nowPage}" th:text="${page}"></strong>
+            </th:block>
+        </div>
+        <hr/>
+        <div th:replace="fragments/footer :: footer"/></div>
+    </div>
+
+    <div class="right">오
+        <div>
+            <strong>로그인 해주세요.</strong>
+        </div>
+    </div>
+</div>
+</body>
+</html>

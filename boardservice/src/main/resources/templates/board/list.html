@@ -14,9 +14,34 @@
         text-decoration-line: none;
     }
     .layout {
-        width: 1000px;
+        width: 1300px;
         margin: 0 auto;
         margin-top: 100px;
+    }
+    div.right {
+        width: 300px;
+        float: right;
+        box-sizing: border-box;
+    }
+    div.left {
+        width: 1000px;
+        float: left;
+    }
+    .login_box {
+        width: 270px;
+        height: 100px;
+        border:2px solid;
+        border-color: #534847;
+        margin: auto;
+    }
+    .user_info {
+        width: 270px;
+        height: 70%;
+
+    }
+    .user_post {
+        width: 270px;
+        height: 30%;
     }
     .number {
         text-align: center;
@@ -81,58 +106,76 @@
     </div>
 </nav>
     <div class="layout">
-        <div>
-            <button type="button" onclick="location.href='/board/write'"
-                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">글쓰기</button>
+        <div class="left">
+            <div>
+                <button type="button" onclick="location.href='/board/write'"
+                        class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">글쓰기</button>
+            </div>
+            <hr/>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="name">번호</th>
+                        <th class="title">제목</th>
+                        <th class="name">작성자</th>
+                        <th class="date">날짜</th>
+                        <th class="views">조회</th>
+                    </tr>
+                    <tr>
+                        <th class="line"></th>
+                        <th class="line"></th>
+                        <th class="line"></th>
+                        <th class="line"></th>
+                        <th class="line"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--목록에서 INCLUDE 상태인 게시글만 표시하는 if문 추가(삭제부분)-->
+                    <tr th:each = "post:${posts}" th:if="${post.status.name() == 'INCLUDE'}">
+                        <td style="text-align: center;" th:text="${post.id}">1</td>
+                        <td>
+                            <a th:href="@{/board/{id}/post (id=${post.id})}">
+                                <p class="title2" th:text="${post.title}">제목입니다.</p>
+                            </a>
+                        </td>
+                        <td style="text-align: center;" th:text="${post.name}">정관우ㅇㅇㅇㅇ</td>
+                        <td style="text-align: center;" th:text="${post.postDate}">2024.00.00 00:00:00</td>
+                        <td style="text-align: center;" th:text="${post.views}">00</td>
+                    </tr>
+                    <tr>
+                        <td class="line"></td>
+                        <td class="line"></td>
+                        <td class="line"></td>
+                        <td class="line"></td>
+                        <td class="line"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <th:block th:each="page: ${#numbers.sequence(startPage,endPage)}">
+                    <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page}, type = ${type}, keyward = ${keyward})}" th:text="${page}"></a>
+                    <strong th:if="${page == nowPage}" th:text="${page}"></strong>
+                </th:block>
+            </div>
+            <hr/>
         </div>
-        <hr/>
-        <table>
-            <thead>
-                <tr>
-                    <th class="name">번호</th>
-                    <th class="title">제목</th>
-                    <th class="name">작성자</th>
-                    <th class="date">날짜</th>
-                    <th class="views">조회</th>
-                </tr>
-                <tr>
-                    <th class="line"></th>
-                    <th class="line"></th>
-                    <th class="line"></th>
-                    <th class="line"></th>
-                    <th class="line"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--목록에서 INCLUDE 상태인 게시글만 표시하는 if문 추가(삭제부분)-->
-                <tr th:each = "post:${posts}" th:if="${post.status.name() == 'INCLUDE'}">
-                    <td style="text-align: center;" th:text="${post.id}">1</td>
-                    <td>
-                        <a th:href="@{/board/{id}/post (id=${post.id})}">
-                            <p class="title2" th:text="${post.title}">제목입니다.</p>
-                        </a>
-                    </td>
-                    <td style="text-align: center;" th:text="${post.name}">정관우ㅇㅇㅇㅇ</td>
-                    <td style="text-align: center;" th:text="${post.postDate}">2024.00.00 00:00:00</td>
-                    <td style="text-align: center;" th:text="${post.views}">00</td>
-                </tr>
-                <tr>
-                    <td class="line"></td>
-                    <td class="line"></td>
-                    <td class="line"></td>
-                    <td class="line"></td>
-                    <td class="line"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="text-center">
-            <th:block th:each="page: ${#numbers.sequence(startPage,endPage)}">
-                <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page}, type = ${type}, keyward = ${keyward})}" th:text="${page}"></a>
-                <strong th:if="${page == nowPage}" th:text="${page}"></strong>
-            </th:block>
+        <div class="right">
+            <div class="login_box">
+                <div class="user_info">
+                    <p style="text-align:center; line-height: 70px;">
+                        <strong onclick="location.href='https://localhost:8080/board/login'" style="cursor:pointer">
+                        로그인 해주세요.
+                        </strong>
+                    </p>
+                </div>
+                <div class="line"></div>
+                <div class="user_post">
+                    <p style="text-align:center; line-height: 30px;"><strong>MY 게시물</strong></p>
+                </div>
+
+
+            </div>
         </div>
-        <hr/>
-        <div th:replace="fragments/footer :: footer"/>
     </div>
 <script type="text/javascript">
     function delete() {
