@@ -202,4 +202,10 @@ public class PostController {
         model.addAttribute("form", postForm);
         return "/board/show";
     }
+
+    @GetMapping("board/login")
+    public String login() {
+
+        return "/board/auth/login";
     }
+}
