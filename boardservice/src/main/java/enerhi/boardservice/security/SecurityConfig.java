@@ -33,7 +33,7 @@ public class SecurityConfig {
         http
                 .sessionManagement(sc -> sc.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않음
                 .addFilter(corsConfig.corsFilter()) // @CorssOrigin(인증X), 시큐리티 필터에 등록 인증O --> 모든 요청 허용.
-                .addFilter(new JwtAuthenticationFilter(authenticationManager))
+//                .addFilter(new JwtAuthenticationFilter(authenticationManager))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
