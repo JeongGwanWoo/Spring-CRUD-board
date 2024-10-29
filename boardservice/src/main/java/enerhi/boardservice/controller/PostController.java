@@ -136,11 +136,11 @@ public class PostController {
     //페이지 개수
     public int pageNumber(int pagePostNumber, List<Posts> posts) {
         int postsSize = posts.size(); //글 개수
-        double pageNumber = (double)postsSize / pagePostNumber; //글 개수 / 페이지 당 글 수: 나머지 필요 double
+        double pageNumber = (double) postsSize / pagePostNumber; //글 개수 / 페이지 당 글 수: 나머지 필요 double
         if (pageNumber % 1 < 1) { //나머지가 있을 경우
-            return (int)pageNumber + 1; //글이 남아있으므로 +1
+            return (int) pageNumber + 1; //글이 남아있으므로 +1
         } else {
-            return (int)pageNumber;
+            return (int) pageNumber;
         }
     }
 
@@ -195,7 +195,7 @@ public class PostController {
         postForm.setPostDate(post.getPostDate());
         postForm.setViews(post.getViews());
 
-        model.addAttribute("post",postForm);
+        model.addAttribute("post", postForm);
 
         SearchList(model, pagePostNumber, nowPage, type, keyward);
 
@@ -208,4 +208,10 @@ public class PostController {
 
         return "/board/auth/login";
     }
+
+    @GetMapping("board/signup")
+    public String join() {
+        return "/board/auth/signup";
+    }
+
 }

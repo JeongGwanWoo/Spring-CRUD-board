@@ -3,10 +3,7 @@ package enerhi.boardservice.controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import enerhi.boardservice.domain.LoginResponse;
-import enerhi.boardservice.domain.User;
-import enerhi.boardservice.domain.UserLoginRequest;
-import enerhi.boardservice.domain.UserProfile;
+import enerhi.boardservice.domain.*;
 import enerhi.boardservice.repository.UserRepository;
 import enerhi.boardservice.security.auth.PrincipalDetails;
 import enerhi.boardservice.security.auth.jwt.JwtProperties;
@@ -35,15 +32,27 @@ public class AuthController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("join")
-    public String join(@RequestBody User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles("ROLE_USER");
-        userRepository.save(user);
-        return "회원가입 완료";
+    @PostMapping("signup")
+    public ResponseEntity<?> signup(@RequestBody User user) {
+        try {
+            System.out.println("회원가입 중");
+            System.out.println("user = " + user);
+
+            if (user != null) {
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                user.setRoles("ROLE_USER");
+                userRepository.save(user);
+                return ResponseEntity.ok(new SignupResponse(true, "회원가입 성공"));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SignupResponse(false, "회원가입 실패"));
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new SignupResponse(false, "회원가입 중 에러 발생"));
+        }
     }
 
-    @PostMapping("/board/login")
+    @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
         System.out.println("POST login 호출 ---로그인중---");
         try {
