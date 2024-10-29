@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import enerhi.boardservice.domain.LoginResponse;
 import enerhi.boardservice.domain.User;
 import enerhi.boardservice.domain.UserLoginRequest;
+import enerhi.boardservice.domain.UserProfile;
 import enerhi.boardservice.repository.UserRepository;
 import enerhi.boardservice.security.auth.PrincipalDetails;
 import enerhi.boardservice.security.auth.jwt.JwtProperties;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,8 +43,8 @@ public class AuthController {
         return "회원가입 완료";
     }
 
-    @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequest userLoginRequest){
+    @PostMapping("/board/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
         System.out.println("POST login 호출 ---로그인중---");
         try {
             UsernamePasswordAuthenticationToken authenticationToken =
@@ -73,4 +75,31 @@ public class AuthController {
                 .withClaim("username", principalDetails.getUser().getUsername())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
     }
+
+    @GetMapping("/board/user/info")
+    public ResponseEntity<?> userProfile(Authentication authentication) {
+        System.out.println("사용자 정보 호출 완료");
+        // 로그인한 사용자 정보 가져오기 (PrincipalDetails 같은 인증 객체에서 가져올 수 있음)
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
+        // 사용자 정보 생성
+        UserProfile profile = new UserProfile();
+
+        profile.setUsername(principalDetails.getUsername());
+
+        return ResponseEntity.ok(profile);
+    }
+
+    @GetMapping("board/user")
+    public String user() {
+
+        return "유저페이지";
+    }
+
+    @GetMapping("board/admin")
+    public String admin() {
+
+        return "어드민페이지";
+    }
+
 }
