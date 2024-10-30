@@ -1,4 +1,4 @@
-package enerhi.boardservice.domain;
+package enerhi.boardservice.security.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

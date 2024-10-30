@@ -1,5 +1,6 @@
-package enerhi.boardservice.domain;
+package enerhi.boardservice.domain.entity;
 
+import enerhi.boardservice.domain.PostStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

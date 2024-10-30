@@ -1,6 +1,6 @@
 package enerhi.boardservice.security.auth;
 
-import enerhi.boardservice.domain.User;
+import enerhi.boardservice.security.domain.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +11,7 @@ import java.util.Collection;
 @Data
 public class PrincipalDetails implements UserDetails {
 
-    private enerhi.boardservice.domain.User user;
+    private User user;
 
     public PrincipalDetails(User user) {
         this.user = user;

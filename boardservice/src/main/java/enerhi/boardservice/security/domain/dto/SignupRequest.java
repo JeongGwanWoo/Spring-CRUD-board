@@ -1,4 +1,4 @@
-package enerhi.boardservice.domain;
+package enerhi.boardservice.security.domain.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,14 +1,18 @@
 package enerhi.boardservice.controller;
 
 import enerhi.boardservice.domain.*;
+import enerhi.boardservice.domain.dto.PostForm;
+import enerhi.boardservice.domain.entity.Posts;
+import enerhi.boardservice.security.auth.PrincipalDetails;
+import enerhi.boardservice.security.domain.dto.ResponseDto;
 import enerhi.boardservice.service.PostsService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +25,15 @@ import java.util.List;
 public class PostController {
     private final PostsService postsService;
 
-    //글 작성
+    // 글 작성
     @GetMapping("/board/write")
-    public String postWriteForm(Model model) {
-        model.addAttribute("form", new PostForm());
+    public String postWriteForm(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        PostForm postForm = new PostForm();
+        if (principalDetails != null) {
+            System.out.println("principalDetails = " + principalDetails.getUsername());
+            postForm.setName(principalDetails.getUsername());
+        }
+        model.addAttribute("form", postForm);
         return "board/write";
     }
 

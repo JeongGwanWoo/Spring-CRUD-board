@@ -1,5 +1,6 @@
 package enerhi.boardservice.domain;
 
+import enerhi.boardservice.domain.entity.Posts;
 import enerhi.boardservice.service.PostsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

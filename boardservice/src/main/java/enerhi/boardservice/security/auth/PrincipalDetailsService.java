@@ -1,6 +1,6 @@
 package enerhi.boardservice.security.auth;
 
-import enerhi.boardservice.domain.User;
+import enerhi.boardservice.security.domain.entity.User;
 import enerhi.boardservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

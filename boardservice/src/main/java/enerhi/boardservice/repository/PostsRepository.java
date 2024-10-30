@@ -1,6 +1,6 @@
 package enerhi.boardservice.repository;
 
-import enerhi.boardservice.domain.Posts;
+import enerhi.boardservice.domain.entity.Posts;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

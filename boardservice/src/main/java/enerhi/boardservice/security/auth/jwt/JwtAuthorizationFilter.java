@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import enerhi.boardservice.domain.User;
+import enerhi.boardservice.security.domain.entity.User;
 import enerhi.boardservice.repository.UserRepository;
 import enerhi.boardservice.security.auth.PrincipalDetails;
 import jakarta.servlet.FilterChain;

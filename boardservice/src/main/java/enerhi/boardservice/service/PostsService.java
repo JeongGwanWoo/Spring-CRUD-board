@@ -1,7 +1,7 @@
 package enerhi.boardservice.service;
 
 import enerhi.boardservice.domain.PostStatus;
-import enerhi.boardservice.domain.Posts;
+import enerhi.boardservice.domain.entity.Posts;
 import enerhi.boardservice.repository.PostsRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
