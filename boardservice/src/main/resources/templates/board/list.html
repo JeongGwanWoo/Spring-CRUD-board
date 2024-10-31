@@ -109,7 +109,7 @@
         <div class="left">
             <div>
                 <button type="button" class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder; display: none;" id="login-write">글쓰기</button>
-                <button onclick="location.href='/board/write'" type="button" class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder; display: block;" id="write">글쓰기</button>
+                <button onclick="login_request()" type="button" class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder; display: block;" id="write">글쓰기</button>
             </div>
             <hr/>
             <table>
@@ -220,6 +220,7 @@
 
     function login_request() {
         alert("로그인이 필요합니다.");
+        window.location.href = "/board/login";
     }
     function test() {
         alert("준비중 입니다.");

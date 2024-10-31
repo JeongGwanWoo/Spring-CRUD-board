@@ -9,6 +9,7 @@ import enerhi.boardservice.security.domain.entity.User;
 import enerhi.boardservice.repository.UserRepository;
 import enerhi.boardservice.security.auth.PrincipalDetails;
 import enerhi.boardservice.security.auth.jwt.JwtProperties;
+import enerhi.boardservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class AuthController {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     // 회원가입
     @PostMapping("signup")
@@ -41,13 +43,10 @@ public class AuthController {
             System.out.println("회원가입 중");
             System.out.println("user = " + user);
 
-            if (user != null) {
-                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-                user.setRoles("ROLE_USER");
-                userRepository.save(user);
+            if (userService.signup_duplicate(user)) {
                 return ResponseEntity.ok(new SignupResponse(true, "회원가입 성공"));
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SignupResponse(false, "회원가입 실패"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SignupResponse(false, "중복된 아이디입니다."));
             }
 
         } catch (Exception e) {
