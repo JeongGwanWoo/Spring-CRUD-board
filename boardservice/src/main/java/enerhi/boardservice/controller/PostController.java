@@ -37,18 +37,18 @@ public class PostController {
         return "board/write";
     }
 
-    @PostMapping("/board/write")
-    public String postWrite(PostForm postForm) {
-        Posts post = new Posts();
-        post.setId(postForm.getId());
-        post.setName(postForm.getName());
-        post.setTitle(postForm.getTitle());
-        post.setContent(postForm.getContent());
-
-        postsService.save(post);
-
-        return "redirect:/board/list";
-    }
+//    @PostMapping("/board/user/write")
+//    public String postWrite(PostForm postForm) {
+//        Posts post = new Posts();
+//        post.setId(postForm.getId());
+//        post.setName(postForm.getName());
+//        post.setTitle(postForm.getTitle());
+//        post.setContent(postForm.getContent());
+//
+//        postsService.save(post);
+//
+//        return "redirect:/board/list";
+//    }
 
     SearchStatus searchStatus = SearchStatus.TITLE;
 
@@ -169,22 +169,13 @@ public class PostController {
         return "board/update";
     }
 
-    @PostMapping("/board/{postId}/edit")
-    public String postUpdate(@PathVariable("postId") Long postId, @ModelAttribute("form") PostForm postForm) {
-        log.info("postUpdate 실행은 됐음!");
-        postsService.postUpdate(postId, postForm.getName(), postForm.getTitle(), postForm.getContent());
-
-        return "redirect:/board/list";
-    }
-
-    //글 삭제
-    @PostMapping("/board/{postId}/delete")
-    public String postDelete(@PathVariable("postId") Long postId) {
-        log.info("삭제 함수 호출됨");
-        postsService.postDelete(postId);
-
-        return "redirect:/board/list";
-    }
+//    @PostMapping("/board/user/{postId}/edit")
+//    public String postUpdate(@PathVariable("postId") Long postId, @ModelAttribute("form") PostForm postForm) {
+//        log.info("postUpdate 실행은 됐음!");
+//        postsService.postUpdate(postId, postForm.getName(), postForm.getTitle(), postForm.getContent());
+//
+//        return "redirect:/board/list";
+//    }
 
     //글 내용 조회
     @GetMapping("/board/{postId}/post")

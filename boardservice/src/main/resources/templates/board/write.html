@@ -60,16 +60,14 @@
 <div class="layout">
     <h2>글 작성 양식</h2>
     <hr/>
-    <form th:action="@{/board/write}" th:object="${form}" method="post" name="write">
+    <form th:object="${form}" method="post" name="write" id="write">
         <div>
             <!-- 로그인 상태 일 때-->
-            <textarea th:if="${form.name != null}" class="createName" style="background-color:#F5F5F5;" th:field="*{name}" rows="1" readonly></textarea>
-            <!-- 비로그인 상태 일 때-->
-            <textarea th:if="${form.name == null}" class="createName" th:field="*{name}" rows="1" placeholder="이름을 입력하세요"></textarea>
-            <textarea class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>
+            <textarea class="createName" style="background-color:#F5F5F5;" th:field="*{name}" rows="1" readonly></textarea>
+            <textarea id="title" class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>
         </div>
         <div>
-            <textarea class="createContent" th:field="*{content}" rows="5" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="content" class="createContent" th:field="*{content}" rows="5" placeholder="내용을 입력하세요"></textarea>
         </div>
         <button type="submit" onclick="return confirm('작성하시겠습니까?')"
                 class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">작성</button>
@@ -86,6 +84,28 @@
             location.href='/board/list';
         }
     }
+
+    document.getElementById('write').addEventListener('submit', function(event) {
+       event.preventDefault();
+
+       fetch('/board/user/write', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title.value,
+                content: content.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            window.location.href = '/board/list';
+        })
+        .catch(error => console.error('Error:', error));
+    });
 </script>
 
 </html>

@@ -4,11 +4,13 @@ package enerhi.boardservice.controller;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import enerhi.boardservice.domain.dto.PostForm;
+import enerhi.boardservice.domain.entity.Posts;
 import enerhi.boardservice.security.domain.dto.*;
 import enerhi.boardservice.security.domain.entity.User;
 import enerhi.boardservice.repository.UserRepository;
 import enerhi.boardservice.security.auth.PrincipalDetails;
 import enerhi.boardservice.security.auth.jwt.JwtProperties;
+import enerhi.boardservice.service.PostsService;
 import enerhi.boardservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,10 +22,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -35,6 +34,8 @@ public class AuthController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final PostsService postsService;
+
 
     // 회원가입
     @PostMapping("signup")
@@ -102,6 +103,51 @@ public class AuthController {
         profile.setUsername(principalDetails.getUsername());
 
         return ResponseEntity.ok(profile);
+
+    }
+
+    // 글 작성
+    @PostMapping("/board/user/write")
+    public ResponseEntity<?> postWrite(@RequestBody PostForm postForm,
+                            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println("글 작성 호출");
+        if (principalDetails != null) {
+            String username = principalDetails.getUsername();
+            Posts post = new Posts();
+            post.setId(postForm.getId());
+            post.setName(username);
+            post.setTitle(postForm.getTitle());
+            post.setContent(postForm.getContent());
+            postsService.save(post);
+        }
+        return ResponseEntity.ok(true);
+    }
+
+    //글 삭제
+    @PostMapping("/board/user/{postId}/delete")
+    public ResponseEntity<?> postDelete(@PathVariable("postId") Long postId,
+                             @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println("삭제 호출");
+        if (principalDetails != null) {
+            postsService.postDelete(postId);
+        }
+
+        return ResponseEntity.ok(true);
+    }
+
+    // 글 수정
+    @PostMapping("/board/user/{postId}/edit")
+    public ResponseEntity<?> postUpdate(@PathVariable("postId") Long postId,
+                                        @ModelAttribute("form") PostForm old_postForm,
+                                        @RequestBody PostForm new_postForm,
+                                        @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println("수정 호출");
+        if (principalDetails != null) {
+            String username = principalDetails.getUsername();
+            new_postForm.setName(username);
+            postsService.postUpdate(postId, new_postForm.getName(), new_postForm.getTitle(), new_postForm.getContent());
+        }
+        return ResponseEntity.ok(true);
     }
 
 //    // 글 작성

@@ -56,10 +56,11 @@
 <div class="layout">
     <h2>글 수정 양식</h2>
     <hr/>
-    <form th:object="${form}" method="post">
+    <form id="update" th:object="${form}" method="post">
         <div class="form-group">
-            <textarea class="createName" th:field="*{name}" rows="1" placeholder="이름을 입력하세요"></textarea>
+            <textarea class="createName" th:field="*{name}" rows="1" style="background-color:#F5F5F5;" id="username" readonly>이름 고정</textarea>
             <textarea class="createTitle" th:field="*{title}" rows="1" placeholder="제목을 입력하세요"></textarea>
+            <p id="id" th:text="${form.id}" style="display:none;">123123</p>
         </div>
         <div class="form-group">
             <textarea class="createContent" th:field="*{content}" placeholder="내용을 입력하세요"></textarea>
@@ -79,6 +80,53 @@
             location.href='/board/list';
         }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const username = document.getElementById('username').textContent;
+
+        fetch('/board/user/info', {
+            method: 'GET',
+            headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token') // JWT 토큰을 사용한 경우
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.username != username) {
+                alert('잘못된 요청입니다1.');
+                window.location.href = '/board/list';
+            }
+        })
+        .catch(error => {
+            alert('잘못된 요청입니다.');
+            window.location.href = '/board/list';
+            console.error('Error fetching user info:', error)
+        });
+    });
+
+    document.getElementById('update').addEventListener('submit', function(event) {
+       event.preventDefault();
+       const postId = document.getElementById('id').textContent;
+
+       fetch(`/board/user/${postId}/edit`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title.value,
+                content: content.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            window.location.href = '/board/list';
+        })
+        .catch(error => console.error('Error:', error));
+    });
 </script>
 
 </html>

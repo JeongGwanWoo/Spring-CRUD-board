@@ -87,10 +87,11 @@
 </nav>
 <div class="layout">
     <div>
+        <p id="id" th:text="${form.id}" style="display:none;">123123</p>
         <p th:text="${form.title}">제목</p>
     </div>
     <div>
-        <span class="name" th:text="${form.name}">이름</span>
+        <span class="name" th:text="${form.name}" id="username">이름</span>
         <span th:text="${form.postDate}">2024.09.17 00:00:00</span>
         <span th:text="|조회 ${form.views}|">99</span>
     </div>
@@ -102,11 +103,11 @@
     <div>
         <button type="button" onclick="location.href='/board/write'"
                 class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">글쓰기</button>
-        <form style="float: right;" name="delete" th:action="@{/board/{id}/delete (id=${form.id})}" th:object="${form}" method="post">
+        <form id="delete" style="float: right;" name="delete" th:action="@{/board/user/{id}/delete (id=${form.id})}" th:object="${form}" method="post">
             <button type="button" th:onclick="|location.href='@{/board/{id}/edit (id=${post.id})}'|"
-                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">수정</button>
+                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder; display: none;" id="edit_button">수정</button>
             <button onclick="return confirm('삭제하시겠습니까?')"
-                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder;">삭제</button>
+                    class="btn btn-outline-dark" style="color: #9B8281; font-weight: bolder; display: none;" id="delete_button">삭제</button>
         </form>
     </div>
     <hr/>
@@ -158,5 +159,49 @@
     <hr/>
     <div th:replace="fragments/footer :: footer"/>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log(document.getElementById('id').textContent);
+
+        const username = document.getElementById('username').textContent;
+
+        fetch('/board/user/info', {
+            method: 'GET',
+            headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token') // JWT 토큰을 사용한 경우
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.username == username) {
+                document.getElementById("edit_button").style.display="inline-block";
+                document.getElementById("delete_button").style.display="inline-block";
+            } else {
+                document.getElementById("edit_button").style.display="none";
+                document.getElementById("delete_button").style.display="none";
+            }
+        })
+        .catch(error => console.error('Error fetching user info:', error));
+    });
+
+    document.getElementById('delete').addEventListener('submit', function(event) {
+       event.preventDefault();
+       const postId = document.getElementById('id').textContent;
+
+       fetch(`/board/user/${postId}/delete`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            window.location.href = '/board/list';
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
 </body>
 </html>
