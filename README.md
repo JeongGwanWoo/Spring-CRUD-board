@@ -19,3 +19,6 @@
 ### 프로젝트 기간
 
 - 2024-09-09 ~ 2024-11-07
+
+### 노션 - [[ springboot ] CRUD 게시판](https://www.notion.so/96827fcc01764b3cade456b4baf9722b?v=98da1f881a604daa8e54054fd9bdb874)
+### 깃헙 - [[ springboot ] CRUD 게시판](https://github.com/JeongGwanWoo/Spring-CRUD-board)
